@@ -1,8 +1,7 @@
 from tkinter import *
 import solver
 
-
-fields = 'S(t)_a', 'S(t)_b', 'z(t)_a', 'z(t)_b', 'p(w)_a', 'p(w)_b', 'x_0', 'y_0', 'T', 'Beta', 'Start Beta', 'Final Beta'
+fields = 'S(t)', 'z(t)', 'p(w)', 'x_0', 'y_0', 'T', 'Beta', 'Start Beta', 'Final Beta'
 
 def fetch(entries):
     for entry in entries:
@@ -25,15 +24,18 @@ def makeform(root, fields):
 def solve(entries, automatic=False):
     parameters = {}
     for entry in entries:
-        try:
-            parameters[entry[0]] = float(entry[1].get())
-        except ValueError:
-            if entry[0] == 'Beta' and automatic:
-                continue
-            if (entry[0] == 'Start beta' or entry[0] == 'Final Beta') \
-                    and not automatic:
-                continue
-            return
+	if entry[0] == 'S(t)' or entry[0] == 'p(w)' or entry[0] == 'z(t)':
+	    parameters[entry[0]] = entry[1].get()
+	else:
+            try:
+                parameters[entry[0]] = float(entry[1].get())
+            except ValueError:
+                if entry[0] == 'Beta' and automatic:
+                    continue
+                if (entry[0] == 'Start beta' or entry[0] == 'Final Beta') \
+                        and not automatic:
+                    continue
+                return
     solver.solve(**parameters)
 
 
