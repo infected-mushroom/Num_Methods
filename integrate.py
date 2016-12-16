@@ -13,11 +13,12 @@ def integrate(function, left, right, n):
 		values.append(sum)
 	sum += last
 	values.append(sum)
-	return zip(grid, values)
+	return TabulatedFunction(grid=grid, values=values)
+#	return zip(grid, values)
 
 
 '''func = lambda x: x**2
 left = 0
 right = 5
 n = 21
-print integrate(func, left, right, n)'''
+print integrate(func, left, right, n).values'''

@@ -1,7 +1,8 @@
 from tkinter import *
 import solver
+from PIL import Image, ImageTk
 
-fields = 'S(t)', 'z(t)', 'p(w)', 'x_0', 'y_0', 'T', 'Beta', 'Start Beta', 'Final Beta'
+fields = 'S(t)', 'z(t)', 'p(w)', 'x_0', 'y_0', 'T', 'Num of grid nodes', 'Beta', 'Start Beta', 'Final Beta'
 
 def fetch(entries):
     for entry in entries:
@@ -43,6 +44,15 @@ def solve(entries, automatic=False):
 if __name__ == '__main__':
    root = Tk()
    ents = makeform(root, fields)
+   
+   path = r"test.png"
+   photo = ImageTk.PhotoImage(file=path)
+   label = Label(image=photo)
+   canv = Canvas(root, width=600, height=400)
+   canv.create_image(1, 1, anchor=NW, image=photo)
+   canv.place(x=200, y=320)
+   label = Label(root, image=photo)
+
    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
    b0 = Button(root, text="Solve", command=(lambda e=ents: solve(e)))
    b0.pack(side=LEFT, padx=5, pady=5)
